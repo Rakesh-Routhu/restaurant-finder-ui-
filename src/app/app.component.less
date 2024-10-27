@@ -1,0 +1,48 @@
+.overlay {
+    display: flex;
+    flex-direction: column; /* Stack search form and restaurant list vertically */
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Full viewport height */
+    background: url('/assets/your-background-image.jpg') no-repeat center center;
+    background-size: cover;
+    padding: 20px;
+  }
+  
+  app-search-form {
+    width: 100%;
+    max-width: 600px; /* Limit search form width */
+    margin-bottom: 20px; /* Add spacing between form and results */
+  }
+  
+  app-restaurant-list {
+    width: 100%;
+    max-width: 800px; /* Limit the width of the restaurant list */
+    max-height: 400px; /* Add a max height to allow scrolling if the list is long */
+    overflow-y: auto; /* Scroll if there are many restaurants */
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background for better readability */
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+  }
+  
+  select {
+    margin-bottom: 20px;
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+  }
+  
