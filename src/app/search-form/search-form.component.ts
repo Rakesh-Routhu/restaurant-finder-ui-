@@ -7,10 +7,17 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class SearchFormComponent {
   location: string = '';
+  searchCompleted: boolean = false;
 
   @Output() locationSubmit: EventEmitter<string> = new EventEmitter<string>();
 
   onSubmit() {
     this.locationSubmit.emit(this.location); // Emit the location when the form is submitted
+    this.searchCompleted = true; // Mark search as completed
+  }
+
+  clearSearch() {
+    this.location = ''; // Clear the input
+    this.searchCompleted = false; // Reset search completed status
   }
 }

@@ -1,4 +1,27 @@
-<form (ngSubmit)="onSubmit()">
-    <input [(ngModel)]="location" name="location" placeholder="Enter location" required />
-    <button type="submit">Search</button>
+<div class="search-container">
+  <h1>Eats near you</h1>
+  
+  <form (ngSubmit)="onSubmit()" #searchForm="ngForm">
+    <input 
+      [(ngModel)]="location" 
+      name="location" 
+      placeholder="Enter city" 
+      required 
+      aria-label="Location input"
+    />
+    
+    <button 
+      type="submit" 
+      *ngIf="!searchCompleted" 
+      [disabled]="!searchForm.valid">
+      Search
+    </button>
+    
+    <button 
+      type="button" 
+      *ngIf="searchCompleted" 
+      (click)="clearSearch()">
+      Clear
+    </button>
   </form>
+</div>
