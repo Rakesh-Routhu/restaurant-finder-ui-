@@ -1,4 +1,7 @@
 <div class="overlay">
   <app-search-form (locationSubmit)="updateLocation($event)"></app-search-form>
-  <app-restaurant-list [restaurants]="restaurants"></app-restaurant-list>
+  <ng-container *ngIf="restaurants.length > 0">
+    <app-restaurant-list [restaurants]="restaurants"></app-restaurant-list>
+  </ng-container>
+  <!-- <app-restaurant-list [restaurants]="restaurants"></app-restaurant-list> -->
 </div>

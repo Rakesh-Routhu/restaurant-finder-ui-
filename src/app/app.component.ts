@@ -32,6 +32,7 @@ export class AppComponent {
   }
 
   updateLocation(newLocation: string) {
+    if (newLocation === '') this.restaurants = []
     this.location = newLocation; // Update the location from the form
     this.fetchRestaurants(); // Fetch restaurants for the new location
   }

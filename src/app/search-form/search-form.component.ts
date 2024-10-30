@@ -17,6 +17,7 @@ export class SearchFormComponent {
   }
 
   clearSearch() {
+    this.locationSubmit.emit(''); // Emit an empty string to clear the search
     this.location = ''; // Clear the input
     this.searchCompleted = false; // Reset search completed status
   }
