@@ -7,9 +7,13 @@ import { MapsService } from './maps.service';
   styleUrls: ['./app.component.less']
 })
 export class AppComponent {
+  router: any;
+  title(title: any) {
+    throw new Error('Method not implemented.');
+  }
   restaurants: any[] = [];
   location: string = ''; // Default location is empty
-  radius: number = 1000; // Example radius
+  radius: number = 5000; // Example radius
   searchMade: boolean = false; // Tracks if a search has been performed
 
   constructor(private mapsService: MapsService) {}
@@ -35,5 +39,10 @@ export class AppComponent {
     if (newLocation === '') this.restaurants = []
     this.location = newLocation; // Update the location from the form
     this.fetchRestaurants(); // Fetch restaurants for the new location
+  }
+
+  // Navigate to the restaurant details page
+  viewRestaurantDetails(restaurantId: number) {
+    this.router.navigate(['/restaurant', restaurantId]);
   }
 }

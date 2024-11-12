@@ -1,51 +1,56 @@
 .search-container {
-    text-align: center;
-    margin-top: 50px;
-  
-    h1 {
-      font-size: 2em;
-      color: #333;
-      margin-bottom: 20px;
+  text-align: center;
+  margin-top: 50px;
+
+  h1 {
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  form {
+    display: flex; /* Use flex instead of inline-flex */
+    flex-direction: column; /* Stack the form elements vertically */
+    align-items: center; /* Center the form elements horizontally */
+    max-width: 400px; /* Limit the form width */
+    margin: 0 auto; /* Center the form container */
+  }
+
+  input {
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%; /* Ensure input spans full width of form */
+    margin-bottom: 15px; /* Add space below the input */
+  }
+
+  button {
+    padding: 10px 20px;
+    font-size: 1em;
+    color: white;
+    background-color: #4CAF50;
+    border: none;
+    cursor: pointer;
+    width: 100%; /* Make button span the full width of the form */
+    margin-bottom: 15px; /* Add space below the button */
+
+    &:disabled {
+      background-color: #cccccc;
     }
-  
-    form {
-      display: inline-flex;
-      align-items: center;
-  
-      input {
-        padding: 10px;
-        font-size: 1em;
-        border: 1px solid #ccc;
-        border-radius: 5px 0 0 5px;
-        width: 300px;
-      }
-  
-      button {
-        padding: 10px 20px;
-        font-size: 1em;
-        color: white;
-        background-color: #4CAF50;
-        border: none;
-        cursor: pointer;
-  
-        &:disabled {
-          background-color: #cccccc;
-        }
-  
-        &:hover:enabled {
-          background-color: #45a049;
-        }
-      }
-  
-      button[type="button"] {
-        background-color: #f44336;
-        border-radius: 5px;
-        margin-left: 5px;
-  
-        &:hover {
-          background-color: #d32f2f;
-        }
-      }
+
+    &:hover:enabled {
+      background-color: #45a049;
     }
   }
-  
+
+  button[type="button"] {
+    background-color: #f44336;
+    border-radius: 5px;
+    width: 100%; /* Make button span the full width of the form */
+
+    &:hover {
+      background-color: #d32f2f;
+    }
+  }
+}

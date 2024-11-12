@@ -1,7 +1,8 @@
 <div class="search-container">
   <h1>Eats near you</h1>
-  
+
   <form (ngSubmit)="onSubmit()" #searchForm="ngForm">
+    <!-- Location input -->
     <input 
       [(ngModel)]="location" 
       name="location" 
@@ -10,6 +11,18 @@
       aria-label="Location input"
     />
     
+    <!-- Radius input -->
+    <input 
+      [(ngModel)]="radius" 
+      name="radius" 
+      type="number" 
+      placeholder="Enter radius in meters" 
+      required 
+      min="1" 
+      aria-label="Radius input"
+    />
+    
+    <!-- Search button -->
     <button 
       type="submit" 
       *ngIf="!searchCompleted" 
@@ -17,6 +30,7 @@
       Search
     </button>
     
+    <!-- Clear button -->
     <button 
       type="button" 
       *ngIf="searchCompleted" 

@@ -6,14 +6,20 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { SearchFormComponent } from './search-form/search-form.component';
 import { RestaurantListComponent } from './restaurant-list/restaurant-list.component';
+import { RestaurantDetailsComponent } from './restaurant-details/restaurant-details.component';
+import { RouterModule } from '@angular/router';
+import { AppRoutingModule } from './app-routing.module'; // Import the AppRoutingModule
+
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchFormComponent,
     RestaurantListComponent,
+    RestaurantDetailsComponent,
   ],
   imports: [
+    AppRoutingModule,
     BrowserModule,
     HttpClientModule, // Include HttpClientModule here
     FormsModule

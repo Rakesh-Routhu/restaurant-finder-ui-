@@ -18,4 +18,8 @@ export class MapsService {
   getLatLong(location: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/get_lat_long`, { location });
   }
+  // Fetch restaurant details by ID
+  getRestaurantDetails(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/restaurant_details/${id}`);  // Assume the API endpoint for restaurant details is '/restaurants/{id}'
+  }
 }

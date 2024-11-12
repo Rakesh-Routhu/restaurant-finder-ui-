@@ -1,0 +1,17 @@
+<div *ngIf="restaurantDetails; else loading">
+    <h2>{{ restaurantDetails.name }}</h2>
+    <p><strong>Address:</strong> {{ restaurantDetails.address }}</p>
+    <p><strong>Rating:</strong> {{ restaurantDetails.rating || 'Not rated' }}</p>
+    <p><strong>Phone:</strong> {{ restaurantDetails.phone }}</p>
+    <p><strong>Hours:</strong> {{ restaurantDetails.hours }}</p>
+    <p><strong>Website:</strong> <a [href]="restaurantDetails.website" target="_blank">{{ restaurantDetails.website }}</a></p>
+  </div>
+  
+  <ng-template #loading>
+    <p>Loading details...</p>
+  </ng-template>
+  
+  <div *ngIf="errorMessage" class="error-message">
+    <p>{{ errorMessage }}</p>
+  </div>
+  
