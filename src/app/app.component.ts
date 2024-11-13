@@ -15,6 +15,7 @@ export class AppComponent {
   location: string = ''; // Default location is empty
   radius: number = 5000; // Example radius
   searchMade: boolean = false; // Tracks if a search has been performed
+  isLoggedIn = false;
 
   constructor(private mapsService: MapsService) {}
 

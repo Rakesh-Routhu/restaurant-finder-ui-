@@ -38,4 +38,13 @@
       Clear
     </button>
   </form>
+
+
+  <app-restaurant-list
+    *ngIf="restaurants.length > 0"
+    [restaurants]="restaurants"
+  ></app-restaurant-list>
 </div>
+
+
+

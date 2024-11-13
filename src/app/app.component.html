@@ -1,7 +1,7 @@
 <div class="overlay">
   <!-- <a routerLink="/auth" class="auth-link">Login / Signup</a> -->
-  <app-search-form (locationSubmit)="updateLocation($event)"></app-search-form>
-  <ng-container *ngIf="restaurants.length > 0">
-    <app-restaurant-list [restaurants]="restaurants"></app-restaurant-list>
-  </ng-container>
+
+  <router-outlet></router-outlet>
+
+
 </div>

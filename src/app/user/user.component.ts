@@ -1,12 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { UserService } from '../user.service';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.less']
 })
-export class UserComponent implements OnInit {
+
+
+export class UserComponent {
+  constructor(private userService: UserService, private http: HttpClient, private router: Router) {}
+
   user = {
     username: '',
     password: '',
@@ -14,73 +20,51 @@ export class UserComponent implements OnInit {
     phone: '',
     address: ''
   };
-  errorMessage: string = '';
+  
+  isLoggedIn: boolean = false
+  showForm: string = 'signup';  // Default form is signup
   successMessage: string = '';
+  errorMessage: string = '';
 
-  constructor(private userService: UserService) {}
-
-  ngOnInit(): void {}
-
-  signup(): void {
-    this.userService.signup(
-      this.user.username,
-      this.user.password,
-      this.user.email,
-      this.user.phone,
-      this.user.address
-    ).subscribe(
-      (response) => {
-        this.successMessage = 'User registered successfully!';
-        this.errorMessage = '';
-      },
-      (error) => {
-        this.errorMessage = 'Error registering user.';
-        this.successMessage = '';
-      }
-    );
+  signup() {
+    // Handle signup logic
+    this.userService.signup(this.user.username, this.user.password, this.user.email, this.user.phone, this.user.address).subscribe();
+    console.log('Signup:', this.user);
+    this.successMessage = 'Signup successful!';
+    this.errorMessage = '';
   }
 
-  login(): void {
-    this.userService.login(this.user.email, this.user.password).subscribe(
-      (response) => {
-        if (response.success) {
-          this.successMessage = 'Login successful!';
-          this.errorMessage = '';
-        } else {
-          this.errorMessage = 'Invalid credentials.';
-          this.successMessage = '';
-        }
+  login() {
+    // Handle login logic
+    this.userService.login(this.user.email, this.user.password).subscribe({
+      next: (response) => {
+        // On success: handle response, show success message, and navigate
+        console.log('Login successful:', response);
+        this.successMessage = 'Login successful!';
+        this.errorMessage = '';
+        this.router.navigate(['search']);  // Redirect to dashboard or desired page
       },
-      (error) => {
-        this.errorMessage = 'Error logging in.';
+      error: (error) => {
+        // On error: handle error response
+        console.error('Login failed:', error);
+        this.errorMessage = 'Login failed. Please check your credentials.';
         this.successMessage = '';
       }
-    );
+    });
+    console.log('Login:', this.user);
   }
 
-  updateUser(): void {
-    this.userService.updateUser(this.user.username, this.user.email, this.user.password).subscribe(
-      (response) => {
-        this.successMessage = 'User updated successfully!';
-        this.errorMessage = '';
-      },
-      (error) => {
-        this.errorMessage = 'Error updating user.';
-        this.successMessage = '';
-      }
-    );
+  updateUser() {
+    // Handle user update logic
+    this.userService.updateUser(this.user.username, this.user.email, this.user.password).subscribe();
+    console.log('Update User:', this.user);
   }
 
-  deleteUser(): void {
-    this.userService.deleteUser(this.user.email).subscribe(
-      (response) => {
-        this.successMessage = 'User deleted successfully!';
-        this.errorMessage = '';
-      },
-      (error) => {
-        this.errorMessage = 'Error deleting user.';
-        this.successMessage = '';
-      }
-    );
+  deleteUser() {
+    // Handle delete user logic
+    this.userService.deleteUser(this.user.email).subscribe();
+    console.log('Delete User:', this.user);
   }
 }
+
+
