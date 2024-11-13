@@ -15,6 +15,7 @@ export class RestaurantListComponent {
 
   // Method to navigate to the restaurant details page
   fetchRestaurantDetails(id: string): void {
+    console.log('Navigating to restaurant with ID:', id);
     this.router.navigate(['/restaurant', id]); // Navigate to /restaurant/:id
   }
 

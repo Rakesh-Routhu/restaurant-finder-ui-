@@ -8,7 +8,8 @@ import { SearchFormComponent } from './search-form/search-form.component';
 import { RestaurantListComponent } from './restaurant-list/restaurant-list.component';
 import { RestaurantDetailsComponent } from './restaurant-details/restaurant-details.component';
 import { RouterModule } from '@angular/router';
-import { AppRoutingModule } from './app-routing.module'; // Import the AppRoutingModule
+import { AppRoutingModule } from './app-routing.module';
+import { UserComponent } from './user/user.component'; // Import the AppRoutingModule
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { AppRoutingModule } from './app-routing.module'; // Import the AppRoutin
     SearchFormComponent,
     RestaurantListComponent,
     RestaurantDetailsComponent,
+    UserComponent,
   ],
   imports: [
     AppRoutingModule,
