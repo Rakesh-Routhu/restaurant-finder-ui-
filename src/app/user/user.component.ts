@@ -8,8 +8,6 @@ import { Router } from '@angular/router';
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.less']
 })
-
-
 export class UserComponent {
   constructor(private userService: UserService, private http: HttpClient, private router: Router) {}
 
@@ -21,7 +19,7 @@ export class UserComponent {
     address: ''
   };
   
-  isLoggedIn: boolean = false
+  isLoggedIn: boolean = false;
   showForm: string = 'signup';  // Default form is signup
   successMessage: string = '';
   errorMessage: string = '';
@@ -65,6 +63,12 @@ export class UserComponent {
     this.userService.deleteUser(this.user.email).subscribe();
     console.log('Delete User:', this.user);
   }
+
+  forgotPassword() {
+    // Handle forgot password logic (e.g., navigate to a reset password page)
+    console.log('Forgot password clicked');
+    // Optionally, you can trigger a password reset flow here or show a reset form
+    this.successMessage = '';
+    this.errorMessage = 'Password reset functionality is under development.';
+  }
 }
-
-
