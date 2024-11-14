@@ -1,8 +1,9 @@
 <div class="search-container">
-  <h1>Eats near you</h1>
+  <h1>Eats Near You</h1>
 
+  <!-- Search Form -->
   <form (ngSubmit)="onSubmit()" #searchForm="ngForm">
-    <!-- Location input -->
+    <!-- Location Input -->
     <input 
       [(ngModel)]="location" 
       name="location" 
@@ -10,8 +11,8 @@
       required 
       aria-label="Location input"
     />
-    
-    <!-- Radius input -->
+
+    <!-- Radius Input -->
     <input 
       [(ngModel)]="radius" 
       name="radius" 
@@ -21,16 +22,16 @@
       min="1" 
       aria-label="Radius input"
     />
-    
-    <!-- Search button -->
+
+    <!-- Search Button -->
     <button 
       type="submit" 
       *ngIf="!searchCompleted" 
       [disabled]="!searchForm.valid">
       Search
     </button>
-    
-    <!-- Clear button -->
+
+    <!-- Clear Button -->
     <button 
       type="button" 
       *ngIf="searchCompleted" 
@@ -39,12 +40,25 @@
     </button>
   </form>
 
+  <!-- Restaurant List Component -->
+  <div class="restaurant-results" *ngIf="restaurants.length > 0">
+    <h2>Nearby Restaurants</h2>
+    <div class="restaurant-list">
+      <ul>
+        <li *ngFor="let restaurant of restaurants">
+          <h3 (click)="restaurant.showDetails = !restaurant.showDetails">
+            {{ restaurant.name }}
+          </h3>
+          <div *ngIf="restaurant.showDetails" class="details">
+            <p>Address: {{ restaurant.address }}</p>
+            <p>Rating: {{ restaurant.rating ? restaurant.rating : 'Not rated' }}</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
 
-  <app-restaurant-list
-    *ngIf="restaurants.length > 0"
-    [restaurants]="restaurants"
-  ></app-restaurant-list>
+  <ng-template #noRestaurants>
+    <h3>No restaurants found.</h3>
+  </ng-template>
 </div>
-
-
-

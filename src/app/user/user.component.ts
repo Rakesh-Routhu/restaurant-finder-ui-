@@ -6,69 +6,122 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
-  styleUrls: ['./user.component.less']
+  styleUrls: ['./user.component.less'],
 })
 export class UserComponent {
   constructor(private userService: UserService, private http: HttpClient, private router: Router) {}
 
-  user = {
+  // Separate objects for Signup and Login forms
+  signupUser = {
     username: '',
     password: '',
     email: '',
     phone: '',
-    address: ''
+    address: '',
   };
-  
-  isLoggedIn: boolean = false;
-  showForm: string = 'signup';  // Default form is signup
-  successMessage: string = '';
-  errorMessage: string = '';
 
+  loginUser = {
+    email: '',
+    username: '',
+    password: '',
+  };
+
+  isLoggedIn: boolean = false;
+  showForm: string = 'signup'; // Default form is signup
+  signupSuccessMessage: string = '';
+  signupErrorMessage: string = '';
+  loginSuccessMessage: string = '';
+  loginErrorMessage: string = '';
+
+  /**
+   * Signup method
+   */
   signup() {
-    // Handle signup logic
-    this.userService.signup(this.user.username, this.user.password, this.user.email, this.user.phone, this.user.address).subscribe();
-    console.log('Signup:', this.user);
-    this.successMessage = 'Signup successful!';
-    this.errorMessage = '';
+    if (!this.signupUser.username || !this.signupUser.password || !this.signupUser.email) {
+      this.signupErrorMessage = 'Please fill out all required fields.';
+      this.signupSuccessMessage = '';
+      return;
+    }
+
+    this.userService
+      .signup(
+        this.signupUser.username,
+        this.signupUser.password,
+        this.signupUser.email,
+        this.signupUser.phone,
+        this.signupUser.address
+      )
+      .subscribe({
+        next: (response) => {
+          console.log('Signup successful:', response);
+          this.signupSuccessMessage = 'Signup successful!';
+          this.signupErrorMessage = '';
+          this.resetSignupForm();
+        },
+        error: (error) => {
+          console.error('Signup failed:', error);
+          this.signupErrorMessage = 'Signup failed. Please try again.';
+          this.signupSuccessMessage = '';
+        },
+      });
   }
 
+  /**
+   * Login method
+   */
   login() {
-    // Handle login logic
-    this.userService.login(this.user.email, this.user.password).subscribe({
+    if (!this.loginUser.email || !this.loginUser.password) {
+      this.loginErrorMessage = 'Please enter your email and password.';
+      this.loginSuccessMessage = '';
+      return;
+    }
+
+    this.userService.login(this.loginUser.email, this.loginUser.password).subscribe({
       next: (response) => {
-        // On success: handle response, show success message, and navigate
         console.log('Login successful:', response);
-        this.successMessage = 'Login successful!';
-        this.errorMessage = '';
-        this.router.navigate(['search']);  // Redirect to dashboard or desired page
+        this.loginSuccessMessage = 'Login successful!';
+        this.loginErrorMessage = '';
+        this.isLoggedIn = true;
+        this.resetLoginForm();
+        this.router.navigate(['search']);
       },
       error: (error) => {
-        // On error: handle error response
         console.error('Login failed:', error);
-        this.errorMessage = 'Login failed. Please check your credentials.';
-        this.successMessage = '';
-      }
+        this.loginErrorMessage = 'Login failed. Please check your credentials.';
+        this.loginSuccessMessage = '';
+      },
     });
-    console.log('Login:', this.user);
   }
 
-  updateUser() {
-    // Handle user update logic
-    this.userService.updateUser(this.user.username, this.user.email, this.user.password).subscribe();
-    console.log('Update User:', this.user);
-  }
-
-  deleteUser() {
-    // Handle delete user logic
-    this.userService.deleteUser(this.user.email).subscribe();
-    console.log('Delete User:', this.user);
-  }
-
+  /**
+   * Forgot password method
+   */
   forgotPassword() {
-    // Handle forgot password logic (e.g., navigate to a reset password page)
     console.log('Forgot password clicked');
-    // Optionally, you can trigger a password reset flow here or show a reset form
-    this.successMessage = '';
-    this.errorMessage = 'Password reset functionality is under development.';
+    this.loginErrorMessage = 'Password reset functionality is under development.';
+  }
+
+  /**
+   * Reset the signup form fields
+   */
+  resetSignupForm() {
+    this.signupUser = {
+      username: '',
+      password: '',
+      email: '',
+      phone: '',
+      address: '',
+    };
+  }
+
+  /**
+   * Reset the login form fields
+   */
+  resetLoginForm() {
+    this.loginUser = {
+      email: '',
+      username: '',
+      password: '',
+    };
   }
 }

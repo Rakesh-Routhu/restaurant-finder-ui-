@@ -7,11 +7,22 @@
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     background-color: #f9f9f9;
+    overflow-y: auto;
+    max-height: 90vh;
+  }
+
+  h1 {
+    text-align: center;
+    color: white;
+    font-size: 2em;
+    margin-bottom: 20px;
   }
 
   h2 {
     text-align: center;
     color: #333;
+    font-size: 1.5em;
+    margin-bottom: 10px;
   }
 
   form {
@@ -24,14 +35,13 @@
     font-weight: bold;
   }
 
-  input[type="text"],
-  input[type="password"],
-  input[type="email"] {
-    width: 100%;
-    padding: 10px;
+  input {
+    width: 95%;
+    padding: 8px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    font-size: 14px;
   }
 
   button {
@@ -42,11 +52,31 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px;
   }
 
   button:hover {
     background-color: #218838;
+  }
+
+  .forgot-password {
+    width: 100%;
+    background-color: #ffc107;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+
+  .error {
+    color: red;
+    font-size: 0.9em;
+    margin-top: -5px;
+    margin-bottom: 10px;
   }
 
   .success {
@@ -54,101 +84,130 @@
     text-align: center;
     margin-top: 10px;
   }
-
-  .error {
-    color: red;
-    text-align: center;
-    margin-top: 10px;
-  }
-
-  .nav-buttons {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 20px;
-  }
-
-  .nav-buttons button {
-    width: auto;
-    background-color: #007bff;
-    color: white;
-  }
-
-  .nav-buttons button:hover {
-    background-color: #0056b3;
-  }
 </style>
 
-<div *ngIf="!isLoggedIn" class="container">
-  <!-- Navigation to switch between forms -->
-  <div class="nav-buttons">
-    <button (click)="showForm = 'signup'">Signup</button>
-    <button (click)="showForm = 'login'">Login</button>
-    <!-- <button (click)="showForm = 'update'">Update User</button>
-    <button (click)="showForm = 'delete'">Delete User</button> -->
-  </div>
+<!-- Page Title -->
+<h1>Eats Near You</h1>
 
-  <!-- Conditional rendering based on selected form -->
+<div *ngIf="!isLoggedIn" class="container">
+  <!-- Signup Form -->
   <div *ngIf="showForm === 'signup'">
     <h2>Signup</h2>
     <form (ngSubmit)="signup()">
-      <label for="username">Username:</label>
-      <input type="text" id="username" [(ngModel)]="user.username" name="username" required>
+      <!-- Email Input -->
+      <label for="email">Email*:</label>
+      <input
+        type="email"
+        id="email"
+        [(ngModel)]="signupUser.email"
+        name="signupEmail"
+        required
+        #signupEmailInput="ngModel"
+      />
+      <div *ngIf="signupEmailInput.invalid && signupEmailInput.touched" class="error">
+        Please enter a valid email address.
+      </div>
 
-      <label for="password">Password:</label>
-      <input type="password" id="password" [(ngModel)]="user.password" name="password" required>
+      <!-- Username Input -->
+      <label for="username">Username*:</label>
+      <input
+        type="text"
+        id="username"
+        [(ngModel)]="signupUser.username"
+        name="signupUsername"
+        required
+      />
 
-      <label for="email">Email:</label>
-      <input type="email" id="email" [(ngModel)]="user.email" name="email" required>
+      <!-- Password Input -->
+      <label for="password">Password*:</label>
+      <input
+        type="password"
+        id="password"
+        [(ngModel)]="signupUser.password"
+        name="signupPassword"
+        required
+      />
 
-      <label for="phone">Phone (optional):</label>
-      <input type="text" id="phone" [(ngModel)]="user.phone" name="phone">
+      <!-- Phone Input -->
+      <label for="phone">Phone:</label>
+      <input
+        type="text"
+        id="phone"
+        [(ngModel)]="signupUser.phone"
+        name="signupPhone"
+      />
 
-      <label for="address">Address (optional):</label>
-      <input type="text" id="address" [(ngModel)]="user.address" name="address">
+      <!-- Address Input -->
+      <label for="address">Address:</label>
+      <input
+        type="text"
+        id="address"
+        [(ngModel)]="signupUser.address"
+        name="signupAddress"
+      />
 
-      <button type="submit">Signup</button>
+      <!-- Signup Button -->
+      <button type="submit" [disabled]="signupEmailInput.invalid">Signup</button>
     </form>
 
-    <div *ngIf="successMessage" class="success">{{ successMessage }}</div>
-    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+    <!-- Success and Error Messages -->
+    <div *ngIf="signupSuccessMessage" class="success">{{ signupSuccessMessage }}</div>
+    <div *ngIf="signupErrorMessage" class="error">{{ signupErrorMessage }}</div>
+
+    <!-- Go to Login Button -->
+    <button (click)="showForm = 'login'">Go to Login</button>
   </div>
 
+  <!-- Login Form -->
   <div *ngIf="showForm === 'login'">
     <h2>Login</h2>
     <form (ngSubmit)="login()">
-      <label for="emailLogin">Email:</label>
-      <input type="email" id="emailLogin" [(ngModel)]="user.email" name="emailLogin" required>
-  
-      <label for="passwordLogin">Password:</label>
-      <input type="password" id="passwordLogin" [(ngModel)]="user.password" name="passwordLogin" required>
-  
-      <button type="submit">Login</button>
+      <!-- Email Input -->
+      <label for="emailLogin">Email*:</label>
+      <input
+        type="email"
+        id="emailLogin"
+        [(ngModel)]="loginUser.email"
+        name="loginEmail"
+        required
+        #loginEmailInput="ngModel"
+      />
+      <div *ngIf="loginEmailInput.invalid && loginEmailInput.touched" class="error">
+        Please enter a valid email address.
+      </div>
+
+      <!-- Username Input -->
+      <label for="usernameLogin">Username*:</label>
+      <input
+        type="text"
+        id="usernameLogin"
+        [(ngModel)]="loginUser.username"
+        name="loginUsername"
+        required
+      />
+
+      <!-- Password Input -->
+      <label for="passwordLogin">Password*:</label>
+      <input
+        type="password"
+        id="passwordLogin"
+        [(ngModel)]="loginUser.password"
+        name="loginPassword"
+        required
+      />
+
+      <!-- Login Button -->
+      <button type="submit" [disabled]="loginEmailInput.invalid">Login</button>
     </form>
-    <!-- Forgot Password button -->
-    <button (click)="forgotPassword()" style="width: 100%; background-color: #ffc107; color: white; border: none; border-radius: 5px; padding: 10px; cursor: pointer; font-size: 16px;">Forgot Password</button>
+
+    <!-- Forgot Password Button -->
+    <button class="forgot-password" (click)="forgotPassword()">Forgot Password</button>
+
+    <!-- Success and Error Messages -->
+    <div *ngIf="loginSuccessMessage" class="success">{{ loginSuccessMessage }}</div>
+    <div *ngIf="loginErrorMessage" class="error">{{ loginErrorMessage }}</div>
+
+    <!-- Go to Signup Button -->
+    <button (click)="showForm = 'signup'">Go to Signup</button>
   </div>
-
-  <div *ngIf="showForm === 'update'">
-    <h2>Update User</h2>
-    <form (ngSubmit)="updateUser()">
-      <label for="usernameUpdate">Username:</label>
-      <input type="text" id="usernameUpdate" [(ngModel)]="user.username" name="usernameUpdate" required>
-
-      <label for="passwordUpdate">Password:</label>
-      <input type="password" id="passwordUpdate" [(ngModel)]="user.password" name="passwordUpdate">
-
-      <button type="submit">Update</button>
-    </form>
-  </div>
-
-  <div *ngIf="showForm === 'delete'">
-    <h2>Delete User</h2>
-    <form (ngSubmit)="deleteUser()">
-      <label for="emailDelete">Email:</label>
-      <input type="email" id="emailDelete" [(ngModel)]="user.email" name="emailDelete" required>
-
-      <button type="submit">Delete</button>
-    </form>
-  </div>
-
 </div>
