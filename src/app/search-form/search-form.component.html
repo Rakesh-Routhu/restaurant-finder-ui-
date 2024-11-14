@@ -35,7 +35,8 @@
     <button 
       type="submit" 
       *ngIf="!searchCompleted" 
-      [disabled]="!searchForm.valid">
+      [disabled]="!searchForm.valid || location.trim().length === 0"
+      [ngClass]="'search-btn'">
       Search
     </button>
 
@@ -43,7 +44,8 @@
     <button 
       type="button" 
       *ngIf="searchCompleted" 
-      (click)="clearSearch()">
+      (click)="clearSearch()"
+      [ngClass]="'clear-btn'">
       Clear
     </button>
   </form>

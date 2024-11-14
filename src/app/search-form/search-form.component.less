@@ -78,3 +78,24 @@
     color: #555;
   }
 }
+/* In your component's CSS file (search-form.component.less) */
+button.search-btn {
+  background-color: #4CAF50; /* Green for search */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+button.clear-btn {
+  background-color: #f44336; /* Red for clear */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

@@ -36,10 +36,11 @@ export class SearchFormComponent {
   }
 
   clearSearch() {
-    this.locationSubmit.emit(''); // Emit an empty string to clear the search
-    this.location = ''; // Clear the input
-    this.radius = 1000; // Reset the radius
-    this.searchCompleted = false; // Reset search completed status
+    this.locationSubmit.emit('');  // Clear the location input in parent component (if needed)
+    this.location = '';            // Clear location input field
+    this.radius = 1000;            // Reset radius
+    this.searchCompleted = false;  // Reset the search completed flag
+    this.restaurants = [];         // Clear the restaurant list to remove results
   }
 
   // New method to get current location
