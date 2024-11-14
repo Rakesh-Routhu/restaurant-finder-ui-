@@ -12,6 +12,14 @@
       aria-label="Location input"
     />
 
+    <!-- Use My Location Button -->
+    <button 
+      type="button" 
+      (click)="getCurrentLocation()" 
+      [disabled]="!isGeolocationAvailable">
+      Use My Location
+    </button>
+
     <!-- Radius Input -->
     <input 
       [(ngModel)]="radius" 
